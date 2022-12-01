@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+    <title>HYCU CLUB</title>
+
+    <!-- Custom fonts for this template-->
+    <link
+      href="static/assets/css/all.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+      rel="stylesheet"
+    />
+
+    <!-- Custom styles for this template-->
+    <link href="static/assets/css/sb-admin-2.min.css" rel="stylesheet" />
+  </head>
+
+  <body id="page-top">
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+      <!-- Sidebar -->
+      <ul
+        class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled"
+        id="accordionSidebar" >
+        <!-- Sidebar - Brand -->
+        <a
+          class="sidebar-brand d-flex align-items-center justify-content-center"
+          href="#"
+        >
+          <div class="sidebar-brand-icon rotate-n-15">
+            <i class="fas fa-laugh-wink"></i>
+          </div>
+          <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+        </a>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider my-0" />
+
+
+        <!-- Divider -->
+        <hr class="sidebar-divider" />
+        <li class="nav-item">
+          <a
+            class="nav-link collapsed"
+            href="#"
+            data-toggle="collapse"
+            data-target="#collapsePages"
+            aria-expanded="true"
+            aria-controls="collapsePages"
+          >
+            <i class="fas fa-fw fa-folder"></i>
+            <span>Pages</span>
+          </a>
+          <div
+            id="collapsePages"
+            class="collapse"
+            aria-labelledby="headingPages"
+            data-parent="#accordionSidebar"
+          >
+            <div class="bg-white py-2 collapse-inner rounded">
+              <a class="collapse-item" href="#">Login</a>
+            </div>
+          </div>
+        </li>
+
+        <div class="text-center d-none d-md-inline">
+          <button class="rounded-circle border-0" id="sidebarToggle"></button>
+        </div>
+
+      </ul>
+      <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content" style="height: 85px; flex: none">
+          <nav
+            class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"
+          >
+            <button
+              id="sidebarToggleTop"
+              class="btn btn-link d-md-none rounded-circle mr-3"
+            >
+              <i class="fa fa-bars"></i>
+            </button>
+
+            <form
+              class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search"
+            >
+              <div class="input-group">
+                <input
+                  type="text"
+                  class="form-control bg-light border-0 small"
+                  placeholder="Search for..."
+                  aria-label="Search"
+                  aria-describedby="basic-addon2"
+                />
+                <div class="input-group-append">
+                  <button class="btn btn-primary" type="button">
+                    <i class="fas fa-search fa-sm"></i>
+                  </button>
+                </div>
+              </div>
+            </form>
+
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item dropdown no-arrow d-sm-none">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  id="searchDropdown"
+                  role="button"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  <i class="fas fa-search fa-fw"></i>
+                </a>
+                <div
+                  class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                  aria-labelledby="searchDropdown"
+                >
+                  <form class="form-inline mr-auto w-100 navbar-search">
+                    <div class="input-group">
+                      <input
+                        type="text"
+                        class="form-control bg-light border-0 small"
+                        placeholder="Search for..."
+                        aria-label="Search"
+                        aria-describedby="basic-addon2"
+                      />
+                      <div class="input-group-append">
+                        <button class="btn btn-primary" type="button">
+                          <i class="fas fa-search fa-sm"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </li>
+
+              <div class="topbar-divider d-none d-sm-block"></div>
+
+              <li class="nav-item dropdown no-arrow">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  id="userDropdown"
+                  role="button"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  <span class="mr-2 d-none d-lg-inline text-gray-600 small"
+                    >Douglas McGee</span
+                  >
+                  <img
+                    class="img-profile rounded-circle"
+                    src="static/images/undraw_profile.svg"
+                  />
+                </a>
+                <div
+                  class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                  aria-labelledby="userDropdown"
+                >
+                  <a class="dropdown-item" href="#">
+                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Profile
+                  </a>
+                  <a class="dropdown-item" href="#">
+                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Settings
+                  </a>
+                  <a class="dropdown-item" href="#">
+                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Activity Log
+                  </a>
+                  <div class="dropdown-divider"></div>
+                  <a
+                    class="dropdown-item"
+                    href="#"
+                    data-toggle="modal"
+                    data-target="#logoutModal"
+                  >
+                    <i
+                      class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"
+                    ></i>
+                    Logout
+                  </a>
+                </div>
+              </li>
+            </ul>
+          </nav>
+        </div>
+        <div class="row">
+          <div class="col-lg-6 mb-4">
+            <div class="row" id="contentRow">
+              
+          </div>
+        </div>
+      </div>
+    </div>
+    <a class="scroll-to-top rounded" href="#page-top">
+      <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div
+      class="modal fade"
+      id="logoutModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+            <button
+              class="close"
+              type="button"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            Select "Logout" below if you are ready to end your current session.
+          </div>
+          <div class="modal-footer">
+            <button
+              class="btn btn-secondary"
+              type="button"
+              data-dismiss="modal"
+            >
+              Cancel
+            </button>
+            <a class="btn btn-primary" href="login.html">Logout</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="static/assets/js/jquery.min.js"></script>
+    <script src="static/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="static/assets/js/jquery.easing.min.js"></script>
+    <script src="static/assets/js/sb-admin-2.min.js"></script>
+    <script src="static/assets/js/Chart.min.js"></script>
+    <script src="static/assets/js/chart-area-demo.js"></script>
+    <script src="static/assets/js/chart-pie-demo.js"></script>
+    <script>
+      $(document).ready(function () {
+        console.log("eeee");
+      $.ajax({
+        type: "POST",
+        url: "/clubListSelectLogic",
+        data: { name: $("#club_name").val() },
+        success: function (res) {
+          const { results } = res;
+          console.log(res)
+          if (res.msg) {
+            alert(`${res.msg}`);
+            location.href = "/";
+          } else if (res.state == "professor") {
+            if (res.leg == 0) {
+              const ht = `
+                  <div class="col-lg-6 mb-4">
+                    <div class="card bg-danger text-white shadow">
+                      <div class="card-body">
+                        동아리가 없습니다.
+                        <div class="text-white-50 small"></div>
+                      </div>
+                    </div>
+                  </div>`;
+              $("#contentRow").html(ht);
+            } else {
+              const { apply } = res;
+              let ht = ``;
+              for (const i in apply) {
+                ht += `<div class="col-lg-6 mb-4" onClick="clubSelct('${apply[0].CLUB_ID}','${apply[0].CLUB_NAME}')">`;
+                ht += `<div class="card bg-light text-black shadow">
+                      <div class="card-body">
+                        ${apply[0].CLUB_NAME}
+                        <div class="text-white-50 small"></div>
+                      </div>
+                    </div>
+                  </div>`;
+              }
+              $("#contentRow").html(ht);
+            }
+          } else if (res.state == "study") {
+            if (res.leg == 0) {
+              const ht = `
+                  <div class="col-lg-6 mb-4" onClick="location.href='/makeClub'">
+                    <div class="card bg-danger text-white shadow">
+                      <div class="card-body">
+                        가입하신 동아리가 없습니다! </br>지금 바로 우리 동아리 만들기 +
+                        <div class="text-white-50 small"></div>
+                      </div>
+                    </div>
+                  </div>`;
+              $("#contentRow").html(ht);
+            } else {
+              const { apply } = res;
+              let ht = `
+                  <div class="col-lg-6 mb-4" onClick="location.href='/makeClub'">
+                    <div class="card bg-light text-black shadow">
+                      <div class="card-body">
+                        동아리 만들기 +
+                        <div class="text-white-50 small"></div>
+                      </div>
+                    </div>
+                  </div>`;
+              for (const i in apply) { 
+                ht += `<div class="col-lg-6 mb-4" onClick="`;
+                ht +=
+                  apply[0].APPLY_STATE == "N"
+                    ? `alert('아직 동아리 승인되지 않았습니다.')`
+                    : `location.href='/makeClub'`;
+                ht += `">`;
+                ht += `<div class="card bg-light text-black shadow">
+                      <div class="card-body">
+                        ${apply[0].CLUB_NAME}
+                        <div class="text-white-50 small"></div>
+                      </div>
+                    </div>
+                  </div>`;
+              }
+
+              $("#contentRow").html(ht);
+            }
+          }
+          console.log(res);
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+          // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
+          alert("에러가 발생했습니다.");
+        },
+      });
+    });
+
+    const clubSelct = function(id, name){
+      if(confirm(`${name}의 고문을 맡으시겠습니까?`)){
+          $.ajax({
+            type: "POST",
+            url: "/clubProUpdate",
+            data: { id : id },
+            success: function (res) {
+              alert("동아리가 개설되었습니다.");
+              return (location.href = "/index")
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+              alert("에러가 발생했습니다.");
+            }
+          });
+        //location.href = "";
+      };
+    }
+    </script>
+  </body>
+</html>
