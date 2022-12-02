@@ -213,9 +213,55 @@ app.get("/register", function (req, res) {
   page("register.html", req, res);
 });
 
-/** 회원가입 화면 */
+/** 동아리 페이지 */
+app.post("/clubPostCheck", function (req, res) {
+  const { id } = req.body;
+  let sql =
+    user.state == "professor"
+      ? `SELECT PID FROM CLUB WHERE CLUB_ID = '${id}' AND PID = '${user.id}'`
+      : `SELECT USER_ID FROM APPLY_CLUB WHERE USER_ID = '${user.id}' AND CLUB_ID = '${id}'`;
+  connection.query(sql, function (err, results, fields) {
+    if (err) {
+      console.log(err);
+    } else {
+      if (results.length >= 1) {
+        user.clubIdPost = `${id}`;
+        console.log(user.clubIdPost);
+        res.json("/clubPost");
+      } else {
+        res.json("/index");
+      }
+    }
+  });
+});
+
+/** 동아리 상세 페이지 */
 app.get("/clubPost", function (req, res) {
   page("clubPost.html", req, res);
+});
+
+app.post("/clubPostLogic", function (req, res) {
+  let sql = `SELECT * FROM CLUB_NOTICE WHERE CLUB_ID = '${user.clubIdPost}' `;
+  connection.query(sql, function (err, results, fields) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.json({ results: results });
+    }
+  });
+});
+
+/** 동아리 게시글 작성 페이지 */
+app.get("/clubPostCreate", function (req, res) {
+  page("clubPostCreate.html", req, res);
+});
+
+app.post("/insertPostLogic", function (req, res) {
+  let sql = `INSERT INTO club_notice (CLUB_NOTICE_ID, USER_ID, CLUB_ID, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_DATE, STATE_VIEWS) 
+  VALUES (${user.clubIdPost}_${nowDate(0)}, ${user.id}, ${
+    user.clubIdPost
+  }, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_DATE, STATE_VIEWS);`;
+  res.json({ results: results });
 });
 /** ------------------------------------------- */
 /** -------------------Utill------------------- */
