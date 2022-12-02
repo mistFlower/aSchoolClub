@@ -420,7 +420,7 @@
                       <div class="card-body">
                         승인 대기 중인 동아리들 보기
                         <div class="text-white-50 small"></div>
-                      </div>
+                      </div>    
                     </div>
                   </div>`;
                 for (const i in apply) {
@@ -463,7 +463,7 @@
                   ht +=
                     apply[0].APPLY_STATE == "N"
                       ? `alert('아직 동아리 승인되지 않았습니다.')`
-                      : `location.href='/makeClub'`;
+                      : `clubPost('${apply[0].CLUB_ID}')`;
                   ht += `">`;
                   ht += `<div class="card bg-light text-black shadow">
                       <div class="card-body">
@@ -481,10 +481,26 @@
           },
           error: function (XMLHttpRequest, textStatus, errorThrown) {
             // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
-            alert("회원가입을 실패하셨습니다. 문의해주세요.");
+            alert("에러가 발생되었습니다. 문의해주세요.");
           },
         });
       });
+
+      var clubPost = function (param) {
+        $.ajax({
+          type: "POST",
+          url: "/clubPostCheck",
+          data: {
+            id: param,
+          },
+          success: function (res) {
+            location.href = res;
+          },
+          error: function (XMLHttpRequest, textStatus, errorThrown) {
+            alert("에러가 발생하였습니다. 문의해주세요.");
+          },
+        });
+      };
     </script>
   </body>
 </html>
