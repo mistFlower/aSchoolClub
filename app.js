@@ -241,7 +241,8 @@ app.get("/clubPost", function (req, res) {
 });
 
 app.post("/clubPostLogic", function (req, res) {
-  let sql = `SELECT * FROM CLUB_NOTICE WHERE CLUB_ID = '${user.clubIdPost}' `;
+  let sql = `SELECT A.*, B.NAME FROM club_notice A, user B WHERE A.CLUB_ID = '${user.clubIdPost}' AND A.USER_ID = B.USER_ID`;
+  console.log(sql);
   connection.query(sql, function (err, results, fields) {
     if (err) {
       console.log(err);
@@ -250,18 +251,61 @@ app.post("/clubPostLogic", function (req, res) {
     }
   });
 });
+var postUpdate = false;
+var detailPost = "";
+app.post("/clubPostDetail", function (req, res) {
+  const { notice, userId } = req.body;
+  postUpdate = user.id == userId ? true : false;
+  detailPost = notice;
+  res.json(true);
+});
+
+/** 동아리 게시글 상세 페이지 */
+app.get("/postDetail", function (req, res) {
+  page("postDetail.html", req, res);
+});
 
 /** 동아리 게시글 작성 페이지 */
 app.get("/clubPostCreate", function (req, res) {
   page("clubPostCreate.html", req, res);
 });
 
+app.post("/postDetailLogic", function (req, res) {
+  const sql = `SELECT A.*, B.NAME FROM club_notice A, user B WHERE A.CLUB_ID = '${user.clubIdPost}' AND A.CLUB_NOTICE_ID = '${detailPost}' AND A.USER_ID = B.USER_ID`;
+  console.log(sql);
+  connection.query(sql, function (err, results, fields) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.json({ result: results, update: postUpdate });
+    }
+  });
+});
+
+app.post("/postDelete", function (req, res) {
+  const sql = `DELETE FROM club_notice WHERE CLUB_ID = '${user.clubIdPost}' AND CLUB_NOTICE_ID = '${detailPost}' AND USER_ID = '${user.id}'`;
+  console.log(sql);
+  connection.query(sql, function (err, results, fields) {
+    if (err) {
+      console.log(err);
+    }
+  });
+  res.json(true);
+});
+
 app.post("/insertPostLogic", function (req, res) {
+  const { post, title } = req.body;
   let sql = `INSERT INTO club_notice (CLUB_NOTICE_ID, USER_ID, CLUB_ID, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_DATE, STATE_VIEWS) 
-  VALUES (${user.clubIdPost}_${nowDate(0)}, ${user.id}, ${
+  VALUES ('${user.id}-${nowDate(1)}', '${user.id}', '${
     user.clubIdPost
-  }, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_DATE, STATE_VIEWS);`;
-  res.json({ results: results });
+  }', '${title}', '${post}', '${nowDate(1)}', '0');`;
+  connection.query(sql, function (err, results, fields) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.json(1);
+    }
+  });
 });
 /** ------------------------------------------- */
 /** -------------------Utill------------------- */

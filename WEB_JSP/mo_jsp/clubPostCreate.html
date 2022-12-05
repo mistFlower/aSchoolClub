@@ -211,7 +211,7 @@
           >
             <div style="width: 100%">
               <a
-                href="/index"
+                href="/clubPost"
                 class="btn btn-secondary btn-icon-split"
                 style="margin: 0px 0px 0px 10px"
               >
@@ -237,6 +237,7 @@
                   font-size: 12pt;
                 "
                 placeholder="제목"
+                id="title"
               />
               <textarea
                 style="
@@ -260,7 +261,10 @@
               width: 100%;
             "
           >
-            <a href="#" class="btn btn-success btn-icon-split">
+            <a
+              href="javascript:insertPost()"
+              class="btn btn-success btn-icon-split"
+            >
               <span class="icon text-white-50">
                 <i class="fas fa-check"></i>
               </span>
@@ -279,15 +283,22 @@
     <script src="static/assets/js/chart-area-demo.js"></script>
     <script src="static/assets/js/chart-pie-demo.js"></script>
     <script>
-      function insertPost(){
+      function insertPost() {
         const text = $("textarea").val();
-        if(isEmpty(text)){
+        const title = $("#title").val();
+
+        if (!isEmpty(text)) {
           $.ajax({
             type: "POST",
             url: "/insertPostLogic",
-            data: {post : $("textarea").val();},
+            data: { post: text, title: title },
             success: function (res) {
-              console.log(res)
+              if (res) {
+                alert("게시물이 작성되었습니다.");
+                location.href = "/clubPost";
+              } else {
+                alert("작성실패하였습니다.");
+              }
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
               alert("에러가 발생했습니다.");
@@ -303,7 +314,9 @@
           value == "" ||
           value == null ||
           value == undefined ||
-          (value != null && typeof value == "object" && !Object.keys(value).length)
+          (value != null &&
+            typeof value == "object" &&
+            !Object.keys(value).length)
         ) {
           return true;
         } else {

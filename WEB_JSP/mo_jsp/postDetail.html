@@ -199,72 +199,89 @@
             </ul>
           </nav>
         </div>
-        <div class="row">
-          <div class="col-lg-6 mb-4">
-            <div style="display: flex; justify-content: space-around">
-              <a href="/index" class="btn btn-secondary btn-icon-split">
+        <div class="row" style="width: 380px">
+          <div
+            class="col-lg-6 mb-4"
+            style="
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              margin-bottom: 0px !important;
+            "
+          >
+            <div style="width: 100%">
+              <a
+                href="/index"
+                class="btn btn-secondary btn-icon-split"
+                style="margin: 0px 0px 0px 10px"
+              >
                 <span class="icon text-white-50">
                   <i
                     class="fas fa-arrow-right"
                     style="transform: rotate(180deg)"
                   ></i>
                 </span>
-                <span class="text">뒤로가기</span>
-              </a>
-              <a href="/clubPostCreate" class="btn btn-info btn-icon-split">
-                <span class="icon text-white-50">
-                  <i class="fas fa-info-circle"></i>
-                </span>
-                <span class="text">게시글 작성</span>
               </a>
             </div>
             <div
               class="row"
               id="contentRow"
-              style="justify-content: center; width: 330px; margin: 20px auto"
-            ></div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <a class="scroll-to-top rounded" href="#page-top">
-      <i class="fas fa-angle-up"></i>
-    </a>
-
-    <!-- Logout Modal-->
-    <div
-      class="modal fade"
-      id="logoutModal"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-            <button
-              class="close"
-              type="button"
-              data-dismiss="modal"
-              aria-label="Close"
+              style="width: 340px; margin: 10px 0"
             >
-              <span aria-hidden="true">×</span>
-            </button>
+              <input
+                type="text"
+                style="
+                  border-radius: 5px 5px 0px 0px;
+                  width: 100%;
+                  border: 1px solid #b8b9c0;
+                  font-size: 12pt;
+                  outline: none;
+                "
+                placeholder="제목"
+                id="title"
+                readonly="true"
+              />
+              <div
+                id="noticeContents"
+                style="
+                  width: 100%;
+                  height: 500px;
+                  outline: none;
+                  border: 1px solid #b8b9c0;
+                  border-radius: 0px 0px 5px 5px;
+                  resize: none;
+                  font-size: 10pt;
+                  border-top: 0px;
+                "
+              ></div>
+            </div>
           </div>
-          <div class="modal-body">
-            Select "Logout" below if you are ready to end your current session.
-          </div>
-          <div class="modal-footer">
-            <button
-              class="btn btn-secondary"
-              type="button"
-              data-dismiss="modal"
-            >
-              Cancel
-            </button>
-            <a class="btn btn-primary" href="login.html">Logout</a>
+          <div
+            id="buttonDeUp"
+            style="
+              justify-content: center;
+              align-items: center;
+              width: 100%;
+              display: none;
+            "
+          >
+            <div style="display: flex; justify-content: space-around">
+              <a
+                href="javascript:postDelete()"
+                class="btn btn-danger btn-icon-split"
+              >
+                <span class="icon text-white-50">
+                  <i class="fas fa-trash"></i>
+                </span>
+                <span class="text" style="width: 100px">삭제</span>
+              </a>
+              <a href="/clubPostCreate" class="btn btn-info btn-icon-split">
+                <span class="icon text-white-50">
+                  <i class="fas fa-info-circle"></i>
+                </span>
+                <span class="text" style="width: 100px">수정</span>
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -281,41 +298,27 @@
       $(document).ready(function () {
         $.ajax({
           type: "POST",
-          url: "/clubPostLogic",
+          url: "/postDetailLogic",
           data: {},
           success: function (res) {
-            if (res.results.length >= 1) {
-              const { results } = res;
-              var table = "<table>";
-              table += "<tr style='border-bottom:1px solid #b7b7b7;'>";
-              table +=
-                "<th style='width: 210px; font-size: 12pt; text-align: center;'>";
-              table += "제목";
-              table += "</th>";
-              table +=
-                "<th style='width: 110px; font-size: 12pt; text-align: center;'>";
-              table += "작성자";
-              table += "<th>";
-              table += "</tr>";
-              for (const i in results) {
-                const { CLUB_NOTICE_ID, NOTICE_TITLE, USER_ID, NAME } =
-                  results[i];
-                table += `<tr onclick='clickPostDetail("${CLUB_NOTICE_ID}", "${USER_ID}")'>`;
-                table += `<td><div style='width: 210px;'>${NOTICE_TITLE}</div></td>`;
-                table += `<td><div style="text-align: center;">${NAME}</div></td>`;
-                table += "</tr>";
-              }
-              table += "</table>";
-              $("#contentRow").html(table);
+            const { result, update } = res;
+            const {
+              CLUB_ID,
+              CLUB_NOTICE_ID,
+              NAME,
+              NOTICE_CONTENT,
+              NOTICE_DATE,
+              NOTICE_TITLE,
+              STATE_VIEWS,
+              USER_ID,
+            } = result[0];
+
+            $("#title").val(`${NOTICE_TITLE}`);
+            $("#noticeContents").html(`${NOTICE_CONTENT}`);
+            if (update) {
+              $("#buttonDeUp").css("display", "");
             } else {
-              $("#contentRow")
-                .text("게시글이 없습니다.")
-                .css("width", "100vw")
-                .css("height", "60vh")
-                .css("text-align", "center")
-                .css("line-height", "60vh")
-                .css("margin", "0px")
-                .css("display", "inherit");
+              $("#buttonDeUp").css("display", "none");
             }
           },
           error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -324,28 +327,35 @@
         });
       });
 
-      function clickPostDetail(notice, user) {
-        alert("ss");
+      function postDelete() {
         $.ajax({
           type: "POST",
-          url: "/clubPostDetail",
-          data: { notice: notice, userId: user },
+          url: "/postDelete",
+          data: {},
           success: function (res) {
-            location.href = "/postDetail";
+            alert("삭제되었습니다.");
+            location.href = "/clubPost";
           },
           error: function (XMLHttpRequest, textStatus, errorThrown) {
             alert("에러가 발생했습니다.");
           },
         });
       }
+
+      var isEmpty = function (value) {
+        if (
+          value == "" ||
+          value == null ||
+          value == undefined ||
+          (value != null &&
+            typeof value == "object" &&
+            !Object.keys(value).length)
+        ) {
+          return true;
+        } else {
+          return false;
+        }
+      };
     </script>
-    <style>
-      td > div {
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        overflow: hidden;
-        padding: 5px 0;
-      }
-    </style>
   </body>
 </html>
