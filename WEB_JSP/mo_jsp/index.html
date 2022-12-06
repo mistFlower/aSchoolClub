@@ -401,7 +401,6 @@
               location.href = "/";
             } else if (res.state == "professor") {
               if (res.leg == 0) {
-                console.log("ee");
                 const ht = `
                   <div class="col-lg-6 mb-4" onClick="location.href='/clubList'">
                     <div class="card bg-danger text-white shadow">
@@ -424,9 +423,8 @@
                     </div>
                   </div>`;
                 for (const i in apply) {
-                  console.log(apply[0]);
                   ht += `<div class="col-lg-6 mb-4">`;
-                  ht += `<div class="card bg-light text-black shadow" onClick="location.href='/clubPost?id=${apply[0].CLUB_ID}'">
+                  ht += `<div class="card bg-light text-black shadow" onClick="clubPost('${apply[0].CLUB_ID}')">
                       <div class="card-body"> ${apply[0].CLUB_NAME} <div class="text-white-50 small"></div>
                       </div>
                     </div>

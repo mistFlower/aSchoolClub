@@ -44,7 +44,7 @@ app.post("/join", function (req, res) {
   const sql = `INSERT  INTO USER(USER_ID, PASSWORD, JOIN_DATE, NAME, USER_STATE) VALUES ('${id}', '${password}','${nowDate(
     0
   )}',' ${name}',' ${state}');`;
-  //mysql.query(sql);
+  console.log("/join" + sql);
   connection.query(sql, function (err, results, fields) {
     if (err) {
       console.log(err);
@@ -64,6 +64,7 @@ app.post("/login", function (req, res) {
     FROM (SELECT * FROM USER_TABLE) A, 
     (SELECT EXISTS( SELECT * FROM USER_TABLE) as success
      FROM DUAL) B;`;
+  console.log("/login" + sql);
   connection.query(sql, function (err, results, fields) {
     if (err) {
       console.log(err);
@@ -111,6 +112,7 @@ app.post("/isSelectClub", function (req, res) {
       user.state == "professor"
         ? `SELECT * FROM club WHERE PID = '${user.id}' AND CLUB_STATE = 'Y'`
         : `SELECT * FROM apply_club WHERE USER_ID = '${user.id}' AND APPLY_STATE != 'F'`;
+    console.log("/isSelectClub" + sql);
     connection.query(sql, function (err, results, fields) {
       if (err) {
         console.log(err);
@@ -142,6 +144,7 @@ app.post("/makeClubLogic", function (req, res) {
 
   let sql = `INSERT INTO apply_club (APPLY_SN, USER_ID, CLUB_ID, APPLY_STATE, JOIN_STATE, CLUB_NAME) 
   VALUES ( '${clubId}', '${user.id}', '${clubId}', 'N', 'Y', '${name}');`;
+  console.log("/makeClubLogic" + sql);
   connection.query(sql, function (err, results, fields) {
     if (err) {
       console.log(err);
@@ -150,6 +153,8 @@ app.post("/makeClubLogic", function (req, res) {
 
   sql = `INSERT INTO club (CLUB_ID, SID, PID, CLUB_STATE, CLUB_NAME) 
   VALUES ( '${clubId}', '${user.id}', '-', 'N', '${name}');`;
+
+  console.log("/makeClubLogic" + sql);
   connection.query(sql, function (err, results, fields) {
     if (err) {
       console.log(err);
@@ -171,7 +176,7 @@ app.get("/clubList", function (req, res) {
 app.post("/clubProUpdate", function (req, res) {
   const { id } = req.body;
   sql = `UPDATE apply_club  SET APPLY_STATE = 'Y' WHERE CLUB_ID = '${id}';`;
-  console.log(sql);
+  console.log("/clubProUpdate" + sql);
   connection.query(sql, function (err, results, fields) {
     if (err) {
       console.log(err);
@@ -179,7 +184,7 @@ app.post("/clubProUpdate", function (req, res) {
   });
 
   sql = `UPDATE club SET CLUB_STATE = 'Y', PID = '${user.id}' WHERE CLUB_ID = '${id}';`;
-  console.log(sql);
+  console.log("/clubProUpdate" + sql);
   connection.query(sql, function (err, results, fields) {
     if (err) {
       console.log(err);
@@ -194,7 +199,7 @@ app.post("/clubListSelectLogic", function (req, res) {
   } else {
     const clubId = user.id + "-" + nowDate(1);
     let sql = `SELECT ap.*, u.name FROM apply_club ap, user u WHERE APPLY_STATE = 'N' AND ap.USER_ID = u.user_id`;
-    console.log(sql);
+    console.log("/clubListSelectLogic" + sql);
     connection.query(sql, function (err, results, fields) {
       if (err) {
         console.log(err);
@@ -220,6 +225,7 @@ app.post("/clubPostCheck", function (req, res) {
     user.state == "professor"
       ? `SELECT PID FROM CLUB WHERE CLUB_ID = '${id}' AND PID = '${user.id}'`
       : `SELECT USER_ID FROM APPLY_CLUB WHERE USER_ID = '${user.id}' AND CLUB_ID = '${id}'`;
+  console.log("/clubPostCheck" + sql);
   connection.query(sql, function (err, results, fields) {
     if (err) {
       console.log(err);
@@ -235,14 +241,20 @@ app.post("/clubPostCheck", function (req, res) {
   });
 });
 
+/** ************************************************************************ */
+/** 동아리 게시글 */
+var postUpdate = false;
+var detailPost = "";
+
 /** 동아리 상세 페이지 */
 app.get("/clubPost", function (req, res) {
   page("clubPost.html", req, res);
 });
 
+/** 게시글 조회 */
 app.post("/clubPostLogic", function (req, res) {
   let sql = `SELECT A.*, B.NAME FROM club_notice A, user B WHERE A.CLUB_ID = '${user.clubIdPost}' AND A.USER_ID = B.USER_ID`;
-  console.log(sql);
+  console.log("/clubPostLogic" + sql);
   connection.query(sql, function (err, results, fields) {
     if (err) {
       console.log(err);
@@ -251,8 +263,7 @@ app.post("/clubPostLogic", function (req, res) {
     }
   });
 });
-var postUpdate = false;
-var detailPost = "";
+
 app.post("/clubPostDetail", function (req, res) {
   const { notice, userId } = req.body;
   postUpdate = user.id == userId ? true : false;
@@ -270,9 +281,10 @@ app.get("/clubPostCreate", function (req, res) {
   page("clubPostCreate.html", req, res);
 });
 
+/** 게시글 상세내용 가져오기 */
 app.post("/postDetailLogic", function (req, res) {
   const sql = `SELECT A.*, B.NAME FROM club_notice A, user B WHERE A.CLUB_ID = '${user.clubIdPost}' AND A.CLUB_NOTICE_ID = '${detailPost}' AND A.USER_ID = B.USER_ID`;
-  console.log(sql);
+  console.log("/postDetailLogic" + sql);
   connection.query(sql, function (err, results, fields) {
     if (err) {
       console.log(err);
@@ -282,9 +294,10 @@ app.post("/postDetailLogic", function (req, res) {
   });
 });
 
+/** 게시글 삭제 */
 app.post("/postDelete", function (req, res) {
   const sql = `DELETE FROM club_notice WHERE CLUB_ID = '${user.clubIdPost}' AND CLUB_NOTICE_ID = '${detailPost}' AND USER_ID = '${user.id}'`;
-  console.log(sql);
+  console.log("/postDelete" + sql);
   connection.query(sql, function (err, results, fields) {
     if (err) {
       console.log(err);
@@ -293,12 +306,27 @@ app.post("/postDelete", function (req, res) {
   res.json(true);
 });
 
+/** 게시글 수정 */
+app.post("/updatePostLogic", function (req, res) {
+  const { post, title } = req.body;
+  const sql = `UPDATE club_notice SET NOTICE_TITLE = '${title}', NOTICE_CONTENT='${post}' WHERE CLUB_NOTICE_ID = '${detailPost}' AND CLUB_ID = '${user.clubIdPost}'`;
+  console.log("/updatePostLogic" + sql);
+  connection.query(sql, function (err, results, fields) {
+    if (err) {
+      console.log(err);
+    }
+  });
+  res.json(true);
+});
+
+/** 게시글 작성 */
 app.post("/insertPostLogic", function (req, res) {
   const { post, title } = req.body;
   let sql = `INSERT INTO club_notice (CLUB_NOTICE_ID, USER_ID, CLUB_ID, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_DATE, STATE_VIEWS) 
   VALUES ('${user.id}-${nowDate(1)}', '${user.id}', '${
     user.clubIdPost
   }', '${title}', '${post}', '${nowDate(1)}', '0');`;
+  console.log("/insertPostLogic" + sql);
   connection.query(sql, function (err, results, fields) {
     if (err) {
       console.log(err);
@@ -307,6 +335,7 @@ app.post("/insertPostLogic", function (req, res) {
     }
   });
 });
+
 /** ------------------------------------------- */
 /** -------------------Utill------------------- */
 /** ------------------------------------------- */
