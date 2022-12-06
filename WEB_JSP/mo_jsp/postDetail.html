@@ -241,7 +241,7 @@
                 id="title"
                 readonly="true"
               />
-              <div id="noticeContents"></div>
+              <textarea id="noticeContents" readonly="true"></textarea>
             </div>
           </div>
           <div
@@ -362,10 +362,9 @@
 
       function postUpdate() {
         document.getElementById("title").removeAttribute("readonly", "");
-        $("#noticeContents")
-          .contents()
-          .unwrap()
-          .wrap("<textarea id='noticeContents'></textarea>");
+        document
+          .getElementById("noticeContents")
+          .removeAttribute("readonly", "");
         $("#deleteLink").hide();
         $("#updateLink").hide();
         $("#updateCan").show();
