@@ -357,7 +357,7 @@
             data: { id : id },
             success: function (res) {
               alert("동아리가 개설되었습니다.");
-              return (location.href = "/index")
+              location.href = "/index";
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
               alert("에러가 발생했습니다.");
